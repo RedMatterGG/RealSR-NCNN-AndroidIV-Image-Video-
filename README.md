@@ -2,8 +2,11 @@
 
 Differences compared to main repo:
  Video support
+ 
  Some extra models for video
+ 
  FFmpeg backend added
+ 
 
 [中文说明](https://github.com/tumuyan/RealSR-NCNN-Android/blob/master/README_CHS.md)  
 
