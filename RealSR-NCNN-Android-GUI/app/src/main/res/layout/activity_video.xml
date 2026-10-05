@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent">
+ <LinearLayout android:orientation="vertical" android:padding="12dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+  <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+   <Button android:id="@+id/nav_image" android:text="Image" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" />
+   <Button android:text="Video" android:enabled="false" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" />
+   <Button android:id="@+id/nav_batch" android:text="Batch images" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" />
+  </LinearLayout>
+  <Button android:id="@+id/video_open" android:text="Select video (SAF)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <TextView android:id="@+id/video_metadata" android:text="No source selected" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <TextView android:text="Video decoder (independent of inference GPU/CPU)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Spinner android:id="@+id/video_decoder" android:layout_width="match_parent" android:layout_height="48dp" />
+  <TextView android:text="Engine / packaged model" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Spinner android:id="@+id/video_model" android:layout_width="match_parent" android:layout_height="48dp" />
+  <TextView android:id="@+id/video_model_info" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <TextView android:text="Scale (unsupported model scales are rejected)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Spinner android:id="@+id/video_scale" android:layout_width="match_parent" android:layout_height="48dp" />
+  <TextView android:text="Denoise (CUGAN / Waifu2x only; other models ignore)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Spinner android:id="@+id/video_noise" android:layout_width="match_parent" android:layout_height="48dp" />
+  <TextView android:text="Inference backend (one graph runs on GPU OR CPU)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Spinner android:id="@+id/video_backend" android:layout_width="match_parent" android:layout_height="48dp" />
+  <CheckBox android:id="@+id/video_gpu_request" android:checked="false" android:text="Request higher GPU performance (Android 16+)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <TextView android:id="@+id/video_gpu_request_note" android:textSize="12sp" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <TextView android:text="CPU intraop threads (not concurrent frame jobs)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Spinner android:id="@+id/video_cpu_threads" android:layout_width="match_parent" android:layout_height="48dp" />
+  <TextView android:text="ADPF inference-work target (not playback FPS)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Spinner android:id="@+id/video_work_target" android:layout_width="match_parent" android:layout_height="48dp" />
+  <TextView android:id="@+id/video_performance_info" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Button android:id="@+id/video_battery_settings" android:text="Open system battery settings (optional)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <TextView android:text="Tile size (0 = engine auto); initial tile from Image settings" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <EditText android:id="@+id/video_tile" android:inputType="number" android:hint="0" android:layout_width="match_parent" android:layout_height="48dp" />
+  <TextView android:text="Hardware encoder (capability checked at start)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Spinner android:id="@+id/video_codec" android:layout_width="match_parent" android:layout_height="48dp" />
+  <EditText android:id="@+id/video_bitrate" android:inputType="number" android:text="12" android:hint="Bitrate Mbit/s" android:layout_width="match_parent" android:layout_height="48dp" />
+  <CheckBox android:id="@+id/video_audio" android:checked="true" android:text="Preserve all AAC audio tracks (other formats fail)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <TextView android:text="SDR only. No subtitles, HDR, interpolation or zero-copy Vulkan. GPU inference uses the selected video decoder and CPU preparation and parallel hardware encoder draining; this is not simultaneous CPU+GPU execution of the same graph. Video batch is not supported." android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <EditText android:id="@+id/video_timestamp" android:inputType="numberDecimal" android:text="0" android:hint="Preview start seconds" android:layout_width="match_parent" android:layout_height="48dp" />
+  <Button android:id="@+id/video_preview" android:text="Preview 5 seconds at timestamp" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Button android:id="@+id/video_start" android:text="Upscale complete video" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Button android:id="@+id/video_cancel" android:text="Cancel" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <TextView android:id="@+id/video_status" android:layout_width="match_parent" android:layout_height="wrap_content" android:textIsSelectable="true" />
+  <Button android:id="@+id/video_save" android:text="Save MP4 (SAF)" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Button android:id="@+id/video_play" android:text="Play result" android:layout_width="match_parent" android:layout_height="wrap_content" />
+  <Button android:id="@+id/video_share" android:text="Share MP4" android:layout_width="match_parent" android:layout_height="wrap_content" />
+ </LinearLayout>
+</ScrollView>

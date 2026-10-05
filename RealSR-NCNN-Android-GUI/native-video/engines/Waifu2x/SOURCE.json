@@ -1,0 +1,14 @@
+{
+  "url": "https://github.com/nihui/waifu2x-ncnn-vulkan",
+  "commit": "a86cfb043e6482b5f08778a114df9b5faf6e73b7",
+  "license_source": "https://github.com/nagadomi/waifu2x/blob/cc385f97a9debfe611316aabfd5d8bb30ba2dbeb/LICENSE",
+  "upstream_sha256": {
+    "waifu2x.cpp": "f88ae0fa74e13b82e578ac604d28b235f78cdc75a433f3d718291bd000357a8b",
+    "waifu2x.h": "c63e77555620052e5de09fb37e8d603552ee3a89ff8616aeb7d1c945b66b53f5",
+    "waifu2x_postproc.comp": "51cb5946bd8d92705d2f5837f5dfae3103e5f67ea517d9e6c2b5121aede74324",
+    "waifu2x_postproc_tta.comp": "5ebe9578656a41e723788ae35dedd3d4fd5eca9f1c0366902f816a167088e876",
+    "waifu2x_preproc.comp": "2f86812d74e3e788a4583d0a0460bb08aa7245467bf0d7f38339ad19c9ec7183",
+    "waifu2x_preproc_tta.comp": "39a6c0ab465470046f59af1f00b154cce556f792a00280e35d54f4711835dec4"
+  },
+  "private_changes": "See LIGHTWEIGHT-MODELS.md and reproducible import_waifu2x.py; original kernels retained"
+}

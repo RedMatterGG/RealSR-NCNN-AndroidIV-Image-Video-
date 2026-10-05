@@ -482,6 +482,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findViewById(R.id.nav_video).setOnClickListener(v -> startActivity(new Intent(this, VideoActivity.class)));
+        findViewById(R.id.nav_batch).setOnClickListener(v -> startActivity(new Intent(this, DirectoryProcessActivity.class)));
 
         if (BuildConfig.DEBUG) {
             setTitle(getString(R.string.app_name) + " (Debug)");

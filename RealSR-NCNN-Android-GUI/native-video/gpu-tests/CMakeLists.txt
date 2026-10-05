@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.22)
+project(gpu_hint_tests LANGUAGES CXX)
+add_executable(gpu_hint_test ../gpu_hint_test.cpp)
+target_compile_features(gpu_hint_test PRIVATE cxx_std_17)
+enable_testing()
+add_test(NAME gpu_hint_session COMMAND gpu_hint_test)

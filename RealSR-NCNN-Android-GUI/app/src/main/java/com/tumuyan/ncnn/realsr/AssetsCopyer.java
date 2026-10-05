@@ -14,6 +14,26 @@ import android.text.TextUtils;
 import android.util.Log;
 
 public class AssetsCopyer {
+    /** Repair pre-JNI/truncated installs and never mark failed extraction complete. */
+    public static void releaseVersionedAssets(Context context, File root, int version) throws IOException {
+        File marker = new File(root, ".assets-" + version + ".complete");
+        AssetStreams.install(marker, () -> releaseAssetsChecked(context, "realsr", root));
+    }
+
+    private static void releaseAssetsChecked(Context context, String path, File parent) throws IOException {
+        String[] entries = context.getAssets().list(path);
+        if (entries == null) throw new IOException("Cannot list assets: " + path);
+        String name = path.substring(path.lastIndexOf('/') + 1);
+        File target = new File(parent, name);
+        if (entries.length > 0) {
+            if (!target.isDirectory() && !target.mkdirs())
+                throw new IOException("Cannot create asset directory: " + target);
+            for (String child : entries) releaseAssetsChecked(context, path + "/" + child, target);
+        } else {
+            AssetStreams.copy(target, context.getAssets().open(path), false);
+        }
+    }
+
 
     private static final String TAG = "AssetsCopyer";
 
@@ -66,39 +86,8 @@ public class AssetsCopyer {
     }
 
     private static boolean writeFile(String fileName, InputStream in, boolean skipExistFile) throws IOException {
-        boolean bRet = true;
-        try {
-
-            File file = new File(fileName);
-            if (file.exists()) {
-                if (skipExistFile) {
-                    Log.d(TAG, "skip file: " + fileName);
-                    return bRet;
-                }else{
-                    file.delete();
-                }
-            } else if (!file.getParentFile().exists()) {
-                file.getParentFile().mkdirs();
-            }
-
-            OutputStream os = new FileOutputStream(file);
-            byte[] buffer = new byte[4112];
-            int read;
-            while ((read = in.read(buffer)) != -1) {
-                os.write(buffer, 0, read);
-            }
-            in.close();
-            in = null;
-            os.flush();
-            os.close();
-            os = null;
-            Log.d(TAG, "copyed file: " + fileName);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            bRet = false;
-        }
-        return bRet;
+        AssetStreams.copy(new File(fileName), in, skipExistFile);
+        return true;
     }
 
     private static void checkFolderExists(String path) {

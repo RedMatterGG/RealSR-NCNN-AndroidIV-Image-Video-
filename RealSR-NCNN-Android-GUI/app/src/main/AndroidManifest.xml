@@ -3,6 +3,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -14,11 +15,19 @@
         android:theme="@style/Theme.RealSR">
         <uses-native-library
             android:name="libOpenCL.so"
-            android:required="true"/>
+            android:required="false"/>
         <uses-native-library
             android:name="libGLES_mali.so"
-            android:required="true"/>
+            android:required="false"/>
         <service android:name=".ProcessingService" />
+        <service android:name=".VideoProcessingService" android:exported="false" />
+        <activity android:name=".VideoActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".SettingActivity"
             android:parentActivityName=".MainActivity"

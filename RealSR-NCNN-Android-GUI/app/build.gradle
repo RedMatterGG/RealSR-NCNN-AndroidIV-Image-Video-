@@ -10,13 +10,27 @@ android {
         minSdk 24
         //noinspection ExpiredTargetSdkVersion
         targetSdk 28
-        versionCode 52
-        versionName '1.13.2'
+        versionCode 58
+        versionName '1.14.1-video6'
+        ndk { abiFilters 'arm64-v8a' }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
 
+    signingConfigs {
+        localRelease {
+            def signingFile = System.getenv('REALSR_SIGNING_PROPERTIES')
+            if (signingFile) {
+                def p = new Properties()
+                file(signingFile).withInputStream { p.load(it) }
+                storeFile file(p.getProperty('storeFile'))
+                storePassword p.getProperty('storePassword')
+                keyAlias p.getProperty('keyAlias')
+                keyPassword p.getProperty('keyPassword')
+            }
+        }
+    }
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
@@ -28,6 +42,7 @@ android {
 
 
         release {
+            if (System.getenv('REALSR_SIGNING_PROPERTIES')) signingConfig signingConfigs.localRelease
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -38,6 +53,12 @@ android {
                 outputFileName = "RealSR-NCNN-Android-GUI-armv8a-${variant.versionName}.apk"
             }
     }
+
+    packaging {
+        jniLibs { useLegacyPackaging = false }
+    }
+
+    sourceSets.main.assets.srcDir rootProject.file('native-ffmpeg/assets')
 
     lint {
         baseline = file("lint-baseline.xml")
@@ -53,13 +74,31 @@ android {
     }
 }
 
+// The recipe pins NDK/NCNN/CMake under the private release toolchain.
+// Nothing is installed into the global SDK or changed in the image CLI targets.
+tasks.register('buildVideoNative', Exec) {
+    workingDir rootProject.projectDir
+    commandLine(System.getenv('REALSR_PYTHON') ?: 'python', 'native-video/build.py')
+    inputs.dir rootProject.file('native-video')
+    outputs.file file('src/main/jniLibs/arm64-v8a/libncnn_video.so')
+}
+tasks.named('preBuild').configure { dependsOn 'buildVideoNative', 'buildFfmpegVideoNative' }
+
+tasks.register('buildFfmpegVideoNative', Exec) {
+    workingDir rootProject.projectDir
+    commandLine(System.getenv('REALSR_PYTHON') ?: 'python', 'native-ffmpeg/build.py')
+    inputs.files(rootProject.fileTree('native-ffmpeg') { include '*.py', '*.sh', '*.cpp', '*.h', '*.md' })
+    outputs.file file('src/main/jniLibs/arm64-v8a/libffmpeg_video.so')
+}
+
 dependencies {
     // Dependency 'androidx.appcompat:appcompat:1.4.1' requires API level 31
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.13.0'
     implementation 'androidx.test:monitor:1.8.0'
     testImplementation 'junit:junit:4.13.2'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.ext:junit:1.3.0'
+    androidTestImplementation 'androidx.test:runner:1.7.0'
 //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0'
 }

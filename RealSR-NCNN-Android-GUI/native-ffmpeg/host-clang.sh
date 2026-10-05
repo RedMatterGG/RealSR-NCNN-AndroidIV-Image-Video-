@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec F:/videoimageupscaler/toolchain/android-ndk-r28c/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe --target=x86_64-pc-windows-msvc -fuse-ld=lld -isystem 'C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/include' -isystem 'C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/ucrt' -isystem 'C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/shared' -isystem 'C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/um' "$@"

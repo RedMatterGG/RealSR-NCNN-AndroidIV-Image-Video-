@@ -1,0 +1,39 @@
+{
+  "native_runtime": "NCNN 20250916 production C++ sources, Windows x64 host",
+  "host_cpu_model_pairs_passed": 12,
+  "host_vulkan_model_pairs_passed": 12,
+  "host_vulkan_device": "NVIDIA GeForce RTX 4060",
+  "repeat_frames_per_pair": 3,
+  "coverage": "FSRCNN-small x2; both Waifu2x upconv7 families with each noise -1,0,1,2,3; General x4 through existing RealSR",
+  "fsrcnn_tensorflow_vs_ncnn": "PASS: real graph, three dynamic sizes, three repeats each, rtol 0.0002 / atol 0.00002",
+  "production_fsrcnn_vs_tensorflow_opencv_max_rgb_byte_error": 1,
+  "native_color_vs_opencv_fixture_max_rgb_byte_error": 0,
+  "tile_full_max_byte_error": "FSRCNN 0, Waifu2x <=1 in executed CPU/Vulkan fixtures",
+  "host_model_provenance_checksums": "PASS: all 25 entries across four manifests; FSRCNN source independently re-fetched from pinned commit; General bytes match independently downloaded upstream 1.11.1 archive",
+  "scoped_java_settings_tests": "PASS: 7",
+  "gradle_testDebugUnitTest": "PASS: 36 tests, 0 failures/errors/skips",
+  "gradle_compileDebugAndroidTestJavaWithJavac": "PASS: includes new CPU/Vulkan repeat-frame and corrupt-model instrumentation",
+  "arm64_build": "PASS: API24, NDK r28c, NCNN20250916; actual rebuilt libncnn_video.so",
+  "jni_sha256": "b7e586bb10f2b9cf7b3a01e3aaaf7d1a923b37ca92ac7dbb724d272a54e7f33e",
+  "jni_bytes": 18457736,
+  "elf_machine": "AArch64 (183)",
+  "pt_load_alignments": [
+    16384,
+    16384,
+    16384
+  ],
+  "adb_devices": [],
+  "android_cpu_vulkan_instrumentation": "UNEXECUTED: no connected adb device; host results are not Android proof",
+  "apk_verification": "PASS: primary packaged binary/39 graphs/signature/16KB checks, see F:/videoimageupscaler/VIDEO4-ARTIFACTS-AND-VERIFICATION.json",
+  "runtime_execution_log": "F:/videoimageupscaler/toolchain/lightweight-native-final.log",
+  "warnings": "TensorFlow compatibility/deprecation logging; Gradle deprecated features; initial MSVC UNDEBUG override warning",
+  "self_evaluation": {
+    "accuracy": "4: actual graph/reference/host runtime and ARM64 compilation verified; no Android execution claim",
+    "completeness": "4: requested engines, genuine models, pins/licenses, host/runtime/build/instrumentation compile complete; device execution pending as explicitly allowed",
+    "clarity": "4: exact IDs/stems/noises documented; General earlier checkpoint ancestry remains unknown and explicitly labeled",
+    "actionability": "4: source, model assets, JNI binary, verification commands ready for primary packaging; APK verification still pending",
+    "conciseness": "4: parent summary omits process replay; detailed reproduction retained in LIGHTWEIGHT-MODELS.md"
+  },
+  "initial_jni_sha256_before_review": "38ae73645e4c7be1f4374abcc58fdd731093398cf0857659d55eca16bc652184",
+  "review_fixes": "Float clamp before unsigned conversion; CPU workspace allocation-failure guards; five native test methods pass including real fail injection and black/dark-edge CPU/Vulkan"
+}
